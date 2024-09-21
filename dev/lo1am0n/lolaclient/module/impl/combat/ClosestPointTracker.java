@@ -64,7 +64,7 @@ public class ClosestPointTracker extends LolaModule {
         }
 
         if (enemy == null) {
-            iHateBoundingBoxes.setPosition(0, 0, 0);
+            iHateBoundingBoxes.setPosition(Minecraft.getMinecraft().thePlayer.posX, Minecraft.getMinecraft().thePlayer.posY + 10, Minecraft.getMinecraft().thePlayer.posZ);
             iHateBoundingBoxes.onUpdate();
             return; // No enemy found
         }
