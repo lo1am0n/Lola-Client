@@ -28,14 +28,16 @@ public class ClosestPointTracker extends LolaModule {
 
     @Override
     public void onEnable() {
-        // Create and spawn the bat at the player's position initially
-        iHateBoundingBoxes = new CustomEntityCPT(Minecraft.getMinecraft().theWorld);
-        iHateBoundingBoxes.setPosition(Minecraft.getMinecraft().thePlayer.posX,
-                Minecraft.getMinecraft().thePlayer.posY + 10,
-                Minecraft.getMinecraft().thePlayer.posZ);
-        iHateBoundingBoxes.setNoAI(true);
+        if (iHateBoundingBoxes == null) {
+            // Create and spawn the bat at the player's position initially
+            iHateBoundingBoxes = new CustomEntityCPT(Minecraft.getMinecraft().theWorld);
+            iHateBoundingBoxes.setPosition(Minecraft.getMinecraft().thePlayer.posX,
+                    Minecraft.getMinecraft().thePlayer.posY + 10,
+                    Minecraft.getMinecraft().thePlayer.posZ);
+            iHateBoundingBoxes.setNoAI(true);
 
-        Minecraft.getMinecraft().theWorld.spawnEntityInWorld(iHateBoundingBoxes);
+            Minecraft.getMinecraft().theWorld.spawnEntityInWorld(iHateBoundingBoxes);
+        }
     }
 
     @Override
@@ -55,8 +57,6 @@ public class ClosestPointTracker extends LolaModule {
         EntityLivingBase enemy = null;
         double enemyDist = Double.MAX_VALUE;
 
-
-
         // Find the closest enemy to the player
         for (Entity entity : Minecraft.getMinecraft().theWorld.loadedEntityList) {
             if (entity instanceof EntityPlayer && entity != Minecraft.getMinecraft().thePlayer) {
@@ -68,9 +68,11 @@ public class ClosestPointTracker extends LolaModule {
             }
         }
 
-        if (enemy == null && iHateBoundingBoxes != null) {
-            iHateBoundingBoxes.setPosition(Minecraft.getMinecraft().thePlayer.posX, Minecraft.getMinecraft().thePlayer.posY + 10, Minecraft.getMinecraft().thePlayer.posZ);
-            iHateBoundingBoxes.onUpdate();
+        if (enemy == null) {
+            if (iHateBoundingBoxes != null) {
+                iHateBoundingBoxes.setPosition(Minecraft.getMinecraft().thePlayer.posX, Minecraft.getMinecraft().thePlayer.posY + 10, Minecraft.getMinecraft().thePlayer.posZ);
+                iHateBoundingBoxes.onUpdate();
+            }
             return; // No enemy found
         }
 
@@ -82,19 +84,21 @@ public class ClosestPointTracker extends LolaModule {
         Vec3 closestPoint = getClosestPointOnBoundingBox(playerPos, enemyBB);
 
         if (closestPoint != null) {
+            if (iHateBoundingBoxes == null) {
+                iHateBoundingBoxes = new CustomEntityCPT(Minecraft.getMinecraft().theWorld);
+                iHateBoundingBoxes.setPosition(Minecraft.getMinecraft().thePlayer.posX,
+                        Minecraft.getMinecraft().thePlayer.posY + 10,
+                        Minecraft.getMinecraft().thePlayer.posZ);
+                iHateBoundingBoxes.setNoAI(true);
 
-            iHateBoundingBoxes = new CustomEntityCPT(Minecraft.getMinecraft().theWorld);
-            iHateBoundingBoxes.setPosition(Minecraft.getMinecraft().thePlayer.posX,
-                    Minecraft.getMinecraft().thePlayer.posY + 10,
-                    Minecraft.getMinecraft().thePlayer.posZ);
-            iHateBoundingBoxes.setNoAI(true);
+                Minecraft.getMinecraft().theWorld.spawnEntityInWorld(iHateBoundingBoxes);
+            }
 
-            Minecraft.getMinecraft().theWorld.spawnEntityInWorld(iHateBoundingBoxes);
-
-            iHateBoundingBoxes.setPosition(closestPoint.xCoord, closestPoint.yCoord, closestPoint.zCoord);
-            iHateBoundingBoxes.onUpdate();
 
             if (iHateBoundingBoxes != null) {
+                iHateBoundingBoxes.setPosition(closestPoint.xCoord, closestPoint.yCoord, closestPoint.zCoord);
+                iHateBoundingBoxes.onUpdate();
+
                 Minecraft.getMinecraft().theWorld.removeEntity(iHateBoundingBoxes); // Updated method
                 iHateBoundingBoxes = null;
             }
