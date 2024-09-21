@@ -37,7 +37,9 @@ import java.util.concurrent.FutureTask;
 import javax.imageio.ImageIO;
 
 import dev.lo1am0n.lolaclient.LolaClient;
+import dev.lo1am0n.lolaclient.event.impl.PostClickEvent;
 import dev.lo1am0n.lolaclient.event.impl.HitRegistrationEvent;
+import dev.lo1am0n.lolaclient.event.impl.PreClickEvent;
 import dev.lo1am0n.lolaclient.module.LolaModule;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;

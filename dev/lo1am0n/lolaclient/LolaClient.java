@@ -4,6 +4,7 @@ import dev.lo1am0n.lolaclient.module.LolaModule;
 import dev.lo1am0n.lolaclient.module.LolaModuleType;
 import dev.lo1am0n.lolaclient.module.impl.combat.ClosestPointTracker;
 import dev.lo1am0n.lolaclient.module.impl.combat.HitRegFix;
+import dev.lo1am0n.lolaclient.module.impl.misc.LolaDebug;
 import dev.lo1am0n.lolaclient.module.impl.movement.Sprint;
 import dev.lo1am0n.lolaclient.module.impl.visual.ModManager;
 import dev.lo1am0n.lolaclient.tag.LolaChatTag;
@@ -33,11 +34,15 @@ public class LolaClient {
         // Chat Tags (for contributors and other very important people)
         playerTags.put("Lo1am0n", LolaChatTag.OWNER);
 
-        // Actual Features
+        // Combat
         lolaModules.add(new ClosestPointTracker());
         lolaModules.add(new HitRegFix());
 
+        // Movement
         lolaModules.add(new Sprint());
+
+        // Misc
+        lolaModules.add(new LolaDebug());
 
         lolaModules.add(new ModManager());
     }

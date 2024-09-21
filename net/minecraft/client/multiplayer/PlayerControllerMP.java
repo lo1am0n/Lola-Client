@@ -1,5 +1,7 @@
 package net.minecraft.client.multiplayer;
 
+import dev.lo1am0n.lolaclient.event.impl.PostClickEvent;
+import dev.lo1am0n.lolaclient.module.LolaModule;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;

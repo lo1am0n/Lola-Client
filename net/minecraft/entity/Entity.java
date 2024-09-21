@@ -1460,6 +1460,10 @@ public abstract class Entity implements ICommandSender
         }
     }
 
+    public Vec3 getLookCustom(float rotationYaw, float rotationPitch)
+    {
+        return this.getVectorForRotation(rotationPitch, rotationYaw);
+    }
     /**
      * Creates a Vec3 using the pitch and yaw of the entities rotation.
      */
@@ -1494,6 +1498,16 @@ public abstract class Entity implements ICommandSender
         Vec3 vec32 = vec3.addVector(vec31.xCoord * blockReachDistance, vec31.yCoord * blockReachDistance, vec31.zCoord * blockReachDistance);
         return this.worldObj.rayTraceBlocks(vec3, vec32, false, false, true);
     }
+
+
+    public MovingObjectPosition rayTraceCustomLook(double blockReachDistance, float partialTicks, float rotationYaw, float rotationPitch)
+    {
+        Vec3 vec3 = this.getPositionEyes(partialTicks);
+        Vec3 vec31 = this.getLookCustom(rotationYaw, rotationPitch);
+        Vec3 vec32 = vec3.addVector(vec31.xCoord * blockReachDistance, vec31.yCoord * blockReachDistance, vec31.zCoord * blockReachDistance);
+        return this.worldObj.rayTraceBlocks(vec3, vec32, false, false, true);
+    }
+
 
     /**
      * Returns true if other Entities should be prevented from moving through this Entity.

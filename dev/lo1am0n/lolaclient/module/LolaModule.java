@@ -90,6 +90,15 @@ public class LolaModule {
         return moduleSettings;
     }
 
+    public ModuleSetting getModuleSettingByName(String name) {
+        for (ModuleSetting setting : getModuleSettings()) {
+            if (setting.getName() == name) {
+                return setting;
+            }
+        }
+        return null;
+    }
+
     public void handleEvent(LolaEvent e) {
         // taken from my old hacked client :)
 
@@ -118,4 +127,7 @@ public class LolaModule {
     public void onUpdate(PreMotionEvent e) {}
 
     public void onServerConnect(ServerJoinEvent e) {}
+
+    public void onClick(PreClickEvent e) {}
+    public void onClick(PostClickEvent e) {}
 }
