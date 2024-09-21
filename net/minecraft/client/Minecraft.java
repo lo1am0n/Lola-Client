@@ -35,6 +35,9 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.Executors;
 import java.util.concurrent.FutureTask;
 import javax.imageio.ImageIO;
+
+import dev.lo1am0n.lolaclient.LolaClient;
+import dev.lo1am0n.lolaclient.module.LolaModule;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.audio.MusicTicker;
@@ -198,6 +201,9 @@ public class Minecraft implements IThreadListener, IPlayerUsage
     private final PropertyMap twitchDetails;
     private final PropertyMap field_181038_N;
     private ServerData currentServerData;
+
+    private LolaClient lolaClient;
+
 
     /** The RenderEngine instance used by Minecraft */
     private TextureManager renderEngine;
@@ -387,6 +393,12 @@ public class Minecraft implements IThreadListener, IPlayerUsage
 
         ImageIO.setUseCache(false);
         Bootstrap.register();
+
+        lolaClient = new LolaClient();
+    }
+
+    public LolaClient getLolaClient() {
+        return lolaClient;
     }
 
     public void run()
@@ -616,7 +628,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
     private void createDisplay() throws LWJGLException
     {
         Display.setResizable(true);
-        Display.setTitle("Minecraft 1.8.8");
+        Display.setTitle("Lola Client v1.0.0 - Minecraft 1.8.9");
 
         try
         {
@@ -1918,6 +1930,11 @@ public class Minecraft implements IThreadListener, IPlayerUsage
                     }
                     else
                     {
+                        for (LolaModule module : getLolaClient().getLolaModules()) {
+                            if (module.getKeybind() == k) {
+                                module.setEnabled(!module.isEnabled());
+                            }
+                        }
                         if (k == 1)
                         {
                             this.displayInGameMenu();

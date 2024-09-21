@@ -1,0 +1,125 @@
+package dev.lo1am0n.lolaclient.module;
+
+import dev.lo1am0n.lolaclient.event.LolaEvent;
+import dev.lo1am0n.lolaclient.event.impl.*;
+import dev.lo1am0n.lolaclient.module.setting.ModuleSetting;
+import org.lwjgl.input.Keyboard;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.concurrent.CopyOnWriteArrayList;
+
+public class LolaModule {
+    /*
+    Before you say anything:
+    No, this is not a hacked client style module, although it works a similar way.
+     */
+
+    private String name;
+    private String description;
+    private boolean enabled = false;
+    private int keybind = Keyboard.KEY_NONE;
+    private LolaModuleType category = LolaModuleType.Misc;
+    private CopyOnWriteArrayList<ModuleSetting> moduleSettings = new CopyOnWriteArrayList<>();
+
+    public LolaModule(String name, String description, LolaModuleType category) {
+        this.name = name;
+        this.description = description;
+        this.category = category;
+    }
+    public LolaModule(String name, String description, LolaModuleType category, boolean enabled) {
+        this.name = name;
+        this.description = description;
+        this.enabled = enabled;
+        this.category = category;
+    }
+    public LolaModule(String name, String description, LolaModuleType category, int keybind) {
+        this.name = name;
+        this.description = description;
+        this.keybind = keybind;
+        this.category = category;
+    }
+    public LolaModule(String name, String description, LolaModuleType category, int keybind, boolean enabled) {
+        this.name = name;
+        this.description = description;
+        this.keybind = keybind;
+        this.enabled = enabled;
+        this.category = category;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+
+        if (this.enabled) {
+            onEnable();
+        }
+        else {
+            onDisable();
+        }
+    }
+
+    public LolaModuleType getCategory() {
+        return category;
+    }
+
+    public void setKeybind(int keybind) {
+        this.keybind = keybind;
+    }
+
+    public int getKeybind() {
+        return keybind;
+    }
+
+    public void setModuleSettings(CopyOnWriteArrayList<ModuleSetting> moduleSettings) {
+        this.moduleSettings = moduleSettings;
+    }
+
+    public CopyOnWriteArrayList<ModuleSetting> getModuleSettings() {
+        return moduleSettings;
+    }
+
+    public void handleEvent(LolaEvent e) {
+        // untested
+        for (Method theMethod : getClass().getMethods()) {
+            if (!theMethod.getName().contains("on")) return;
+
+            if (e instanceof LolaEvent && theMethod.getParameters()[0].getType() == e.getClass()) {
+                Class<?> lolaEvent = theMethod.getParameters()[0].getType();
+
+                try {
+                    theMethod.invoke(this, lolaEvent);
+                } catch (IllegalAccessException | InvocationTargetException ex) {
+                    throw new RuntimeException(ex);
+                }
+
+            }
+        }
+    }
+
+    public void onEnable() {}
+    public void onDisable() {}
+
+    public void onPacket(PacketReceiveEvent e) {}
+    public void onPacket(PacketSendEvent e) {}
+
+    public void onRender(Render2DEvent e) {}
+    public void onRender(Render3DEvent e) {}
+
+    public void onHitReg(HitRegistrationEvent e) {}
+
+    public void onUpdate(PreMotionEvent e) {}
+
+    public void onServerConnect(ServerJoinEvent e) {}
+}
