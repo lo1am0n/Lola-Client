@@ -91,19 +91,15 @@ public class LolaModule {
     }
 
     public void handleEvent(LolaEvent e) {
-        // untested
-        for (Method theMethod : getClass().getMethods()) {
-            if (!theMethod.getName().contains("on")) return;
+        // taken from my old hacked client :)
 
-            if (e instanceof LolaEvent && theMethod.getParameters()[0].getType() == e.getClass()) {
-                Class<?> lolaEvent = theMethod.getParameters()[0].getType();
-
+        for (Method theMethod : this.getClass().getMethods()) {
+            if (theMethod.getParameterTypes().length > 0 && theMethod.getParameterTypes()[0] == e.getClass()) {
                 try {
-                    theMethod.invoke(this, lolaEvent);
+                    theMethod.invoke(this, e);
                 } catch (IllegalAccessException | InvocationTargetException ex) {
                     throw new RuntimeException(ex);
                 }
-
             }
         }
     }

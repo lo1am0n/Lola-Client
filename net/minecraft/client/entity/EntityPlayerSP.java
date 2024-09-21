@@ -1,5 +1,7 @@
 package net.minecraft.client.entity;
 
+import dev.lo1am0n.lolaclient.event.impl.PreMotionEvent;
+import dev.lo1am0n.lolaclient.module.LolaModule;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.MovingSoundMinecartRiding;
 import net.minecraft.client.audio.PositionedSoundRecord;
@@ -167,6 +169,12 @@ public class EntityPlayerSP extends AbstractClientPlayer
      */
     public void onUpdate()
     {
+        for (LolaModule module : Minecraft.getMinecraft().getLolaClient().getLolaModules()) {
+            if (module.isEnabled()) {
+                module.handleEvent(new PreMotionEvent(0));
+            }
+        }
+
         if (this.worldObj.isBlockLoaded(new BlockPos(this.posX, 0.0D, this.posZ)))
         {
             super.onUpdate();

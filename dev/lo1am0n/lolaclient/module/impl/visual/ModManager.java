@@ -22,4 +22,13 @@ public class ModManager extends LolaModule {
 
         Minecraft.getMinecraft().displayGuiScreen(actualGui);
     }
+
+    @Override
+    public void onDisable() {
+        if (actualGui == null) {
+            actualGui = new ModManagerGui();
+        }
+
+        Minecraft.getMinecraft().displayGuiScreen(actualGui);
+    }
 }

@@ -6,13 +6,13 @@ public class Render3DEvent extends LolaEvent {
     /*
     Used for drawing 3D stuff on the screen
     */
-    private int partialTicks = 0;
+    private float partialTicks = 0;
 
-    public Render3DEvent(int partialTicks) {
+    public Render3DEvent(float partialTicks) {
         this.partialTicks = partialTicks;
     }
 
-    public int getPartialTicks() {
+    public float getPartialTicks() {
         return partialTicks;
     }
 }

@@ -40,7 +40,11 @@ public class ModManagerGui extends GuiScreen {
         }
 
         scrollBuffer += Mouse.getDWheel() / 100;
+        Gui.drawRect(x, y, x + width, y + 15, new Color(15, 15, 15, 150).getRGB());
+
         mc.fontRendererObj.drawString("Lola Client - Mod Manager (very original design)", x + 3, y + 3, -1);
+
+        Gui.drawRect(x, y + 15, x + width, y + height, new Color(25, 25, 25, 125).getRGB());
         Gui.drawRect(x + 80, y + 15, x + 80 + 2, y + height, 0xff252525);
         Gui.drawRect(x + 80, y + 50, x + width, y + 50 + 2, 0xff252525);
         Color purple = new Color(152, 96, 255);
@@ -61,7 +65,7 @@ public class ModManagerGui extends GuiScreen {
             count++;
         }
         if (currentModule != null) {
-            mc.fontRendererObj.drawString(currentModule.getName() + ":", x + 100, y + 60, purple.getRGB());
+            mc.fontRendererObj.drawString(currentModule.getName() + " | " + currentModule.getDescription() + ":", x + 100, y + 60, purple.getRGB());
             mc.fontRendererObj.drawString("Key: " + (settingKey ? "Listening..." : Keyboard.getKeyName(currentModule.getKeybind())), x + 100, y + 70, -1);
             count = 0;
             count += scrollBuffer;
@@ -79,20 +83,20 @@ public class ModManagerGui extends GuiScreen {
                                 ((BooleanSetting) s).isCurrentValue() ? 0xff00ff00 : 0xffff0000);
                     }
                     if (s instanceof DoubleNumberSetting) {
-                        drawRect(x + 100 + mc.fontRendererObj.getStringWidth(s.getName() + ":") + 3, (int) offset,
+                        Gui.drawRect(x + 100 + mc.fontRendererObj.getStringWidth(s.getName() + ":") + 3, (int) offset,
                                 x + 100 + mc.fontRendererObj.getStringWidth(s.getName() + ":") + 120, (int) (offset + 1),
                                 0xff252525);
-                        drawRect(x + 100 + mc.fontRendererObj.getStringWidth(s.getName() + ":") + 3, (int) offset,
+                        Gui.drawRect(x + 100 + mc.fontRendererObj.getStringWidth(s.getName() + ":") + 3, (int) offset,
                                 x + 100 + mc.fontRendererObj.getStringWidth(s.getName() + ":") + 3 - 1,
                                 (int) (offset + mc.fontRendererObj.FONT_HEIGHT), 0xff252525);
-                        drawRect(x + 100 + mc.fontRendererObj.getStringWidth(s.getName() + ":") + 3,
+                        Gui.drawRect(x + 100 + mc.fontRendererObj.getStringWidth(s.getName() + ":") + 3,
                                 (int) (offset + mc.fontRendererObj.FONT_HEIGHT - 1),
                                 x + 100 + mc.fontRendererObj.getStringWidth(s.getName() + ":") + 120,
                                 (int) (offset + mc.fontRendererObj.FONT_HEIGHT), 0xff252525);
-                        drawRect(x + 100 + mc.fontRendererObj.getStringWidth(s.getName() + ":") + 120, (int) offset,
+                        Gui.drawRect(x + 100 + mc.fontRendererObj.getStringWidth(s.getName() + ":") + 120, (int) offset,
                                 x + 100 + mc.fontRendererObj.getStringWidth(s.getName() + ":") + 120 + 1,
                                 (int) (offset + mc.fontRendererObj.FONT_HEIGHT), 0xff252525);
-                        drawRect(x + 100 + mc.fontRendererObj.getStringWidth(s.getName() + ":") + 3,
+                        Gui.drawRect(x + 100 + mc.fontRendererObj.getStringWidth(s.getName() + ":") + 3,
                                 (int) (offset + 1),
                                 (int) (x + 100 + mc.fontRendererObj.getStringWidth(s.getName() + ":") + 3
                                         + 117 * (((DoubleNumberSetting) s).getCurrentValue() - ((DoubleNumberSetting) s).getMinimumValue())
@@ -203,6 +207,9 @@ public class ModManagerGui extends GuiScreen {
         }
         count = 0;
         count += scrollBuffer;
+
+        if (currentModule == null) return;
+
         for (ModuleSetting s : currentModule.getModuleSettings()) {
             double offset = y + 70 + 13 + (count * mc.fontRendererObj.FONT_HEIGHT * 1.5);
             if (!((offset + mc.fontRendererObj.FONT_HEIGHT) >= y + height)) {

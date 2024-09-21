@@ -37,6 +37,7 @@ import java.util.concurrent.FutureTask;
 import javax.imageio.ImageIO;
 
 import dev.lo1am0n.lolaclient.LolaClient;
+import dev.lo1am0n.lolaclient.event.impl.HitRegistrationEvent;
 import dev.lo1am0n.lolaclient.module.LolaModule;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -1521,7 +1522,16 @@ public class Minecraft implements IThreadListener, IPlayerUsage
 
                 if (this.playerController.isNotCreative())
                 {
-                    this.leftClickCounter = 10;
+                    HitRegistrationEvent event = new HitRegistrationEvent();
+                    for (LolaModule module : Minecraft.getMinecraft().getLolaClient().getLolaModules()) {
+                        if (module.isEnabled()) {
+                            module.handleEvent(event);
+                        }
+                    }
+
+                    if (!event.isCancelled()) {
+                        this.leftClickCounter = 10;
+                    }
                 }
             }
             else
@@ -1545,7 +1555,16 @@ public class Minecraft implements IThreadListener, IPlayerUsage
                     default:
                         if (this.playerController.isNotCreative())
                         {
-                            this.leftClickCounter = 10;
+                            HitRegistrationEvent event = new HitRegistrationEvent();
+                            for (LolaModule module : Minecraft.getMinecraft().getLolaClient().getLolaModules()) {
+                                if (module.isEnabled()) {
+                                    module.handleEvent(event);
+                                }
+                            }
+
+                            if (!event.isCancelled()) {
+                                this.leftClickCounter = 10;
+                            }
                         }
                 }
             }

@@ -8,6 +8,10 @@ import java.nio.FloatBuffer;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.Callable;
+
+import dev.lo1am0n.lolaclient.event.impl.Render2DEvent;
+import dev.lo1am0n.lolaclient.event.impl.Render3DEvent;
+import dev.lo1am0n.lolaclient.module.LolaModule;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBed;
 import net.minecraft.block.material.Material;
@@ -1167,6 +1171,12 @@ public class EntityRenderer implements IResourceManagerReloadListener
                     this.mc.ingameGUI.renderGameOverlay(p_181560_1_);
                 }
 
+                for (LolaModule module : Minecraft.getMinecraft().getLolaClient().getLolaModules()) {
+                    if (module.isEnabled()) {
+                        module.handleEvent(new Render2DEvent(p_181560_1_));
+                    }
+                }
+
                 this.mc.mcProfiler.endSection();
             }
             else
@@ -1482,6 +1492,12 @@ public class EntityRenderer implements IResourceManagerReloadListener
             GlStateManager.clear(256);
             this.renderHand(partialTicks, pass);
             this.renderWorldDirections(partialTicks);
+        }
+
+        for (LolaModule module : Minecraft.getMinecraft().getLolaClient().getLolaModules()) {
+            if (module.isEnabled()) {
+                module.handleEvent(new Render3DEvent(partialTicks));
+            }
         }
     }
 
