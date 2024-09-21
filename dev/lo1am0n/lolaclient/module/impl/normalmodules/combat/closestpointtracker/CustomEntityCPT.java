@@ -1,14 +1,13 @@
-package dev.lo1am0n.lolaclient.module.impl.combat.closestpointtracker;
+package dev.lo1am0n.lolaclient.module.impl.normalmodules.combat.closestpointtracker;
 
+import dev.lo1am0n.lolaclient.module.impl.normalmodules.combat.ClosestPointTracker;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.passive.EntityAmbientCreature;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
 import java.util.Calendar;
@@ -21,7 +20,7 @@ public class CustomEntityCPT extends EntityAmbientCreature
     public CustomEntityCPT(World worldIn)
     {
         super(worldIn);
-        this.setSize(0.1F, 0.1F);
+        this.setSize((float) ClosestPointTracker.CPT_HITBOX_SIZE, (float) ClosestPointTracker.CPT_HITBOX_SIZE);
         this.setIsBatHanging(true);
     }
 

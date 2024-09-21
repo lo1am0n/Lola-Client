@@ -2,11 +2,14 @@ package dev.lo1am0n.lolaclient;
 
 import dev.lo1am0n.lolaclient.module.LolaModule;
 import dev.lo1am0n.lolaclient.module.LolaModuleType;
-import dev.lo1am0n.lolaclient.module.impl.combat.ClosestPointTracker;
-import dev.lo1am0n.lolaclient.module.impl.combat.HitRegFix;
-import dev.lo1am0n.lolaclient.module.impl.misc.LolaDebug;
-import dev.lo1am0n.lolaclient.module.impl.movement.Sprint;
-import dev.lo1am0n.lolaclient.module.impl.visual.ModManager;
+import dev.lo1am0n.lolaclient.module.impl.advantagemodules.combat.AimAssist;
+import dev.lo1am0n.lolaclient.module.impl.normalmodules.combat.ClosestPointTracker;
+import dev.lo1am0n.lolaclient.module.impl.normalmodules.combat.HitRegFix;
+import dev.lo1am0n.lolaclient.module.impl.normalmodules.misc.LolaAdvantageModules;
+import dev.lo1am0n.lolaclient.module.impl.normalmodules.misc.LolaDebug;
+import dev.lo1am0n.lolaclient.module.impl.normalmodules.movement.Sprint;
+import dev.lo1am0n.lolaclient.module.impl.normalmodules.visual.FreeLook;
+import dev.lo1am0n.lolaclient.module.impl.normalmodules.visual.ModManager;
 import dev.lo1am0n.lolaclient.tag.LolaChatTag;
 
 import java.util.HashMap;
@@ -14,6 +17,8 @@ import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class LolaClient {
+
+    public boolean allowAdvantageModules = false;
     public String versionName = "v1.0.0";
     public String developerNames = "lo1am0n";
 
@@ -44,12 +49,19 @@ public class LolaClient {
         lolaModules.add(new ClosestPointTracker());
         lolaModules.add(new HitRegFix());
 
+        lolaModules.add(new AimAssist());
+
+        // Visual
+        lolaModules.add(new FreeLook());
+
         // Movement
         lolaModules.add(new Sprint());
 
         // Misc
         lolaModules.add(new LolaDebug());
+        lolaModules.add(new LolaAdvantageModules());
 
+        // Mod Manager (keep it down here)
         lolaModules.add(new ModManager());
     }
 

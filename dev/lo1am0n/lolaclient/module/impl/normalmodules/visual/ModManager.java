@@ -1,10 +1,9 @@
-package dev.lo1am0n.lolaclient.module.impl.visual;
+package dev.lo1am0n.lolaclient.module.impl.normalmodules.visual;
 
 import dev.lo1am0n.lolaclient.module.LolaModule;
 import dev.lo1am0n.lolaclient.module.LolaModuleType;
-import dev.lo1am0n.lolaclient.module.impl.visual.modmanager.ModManagerGui;
+import dev.lo1am0n.lolaclient.module.impl.normalmodules.visual.modmanager.ModManagerGui;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.settings.KeyBinding;
 import org.lwjgl.input.Keyboard;
 
 public class ModManager extends LolaModule {
@@ -20,15 +19,8 @@ public class ModManager extends LolaModule {
             actualGui = new ModManagerGui();
         }
 
+        this.setEnabled(false);
         Minecraft.getMinecraft().displayGuiScreen(actualGui);
     }
 
-    @Override
-    public void onDisable() {
-        if (actualGui == null) {
-            actualGui = new ModManagerGui();
-        }
-
-        Minecraft.getMinecraft().displayGuiScreen(actualGui);
-    }
 }

@@ -1,10 +1,8 @@
-package dev.lo1am0n.lolaclient.module.impl.misc;
+package dev.lo1am0n.lolaclient.module.impl.normalmodules.misc;
 
-import dev.lo1am0n.lolaclient.event.impl.PreMotionEvent;
 import dev.lo1am0n.lolaclient.module.LolaModule;
 import dev.lo1am0n.lolaclient.module.LolaModuleType;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.util.ChatComponentText;
 
 public class LolaDebug extends LolaModule {

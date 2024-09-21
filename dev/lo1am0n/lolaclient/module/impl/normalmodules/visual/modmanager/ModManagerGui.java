@@ -1,4 +1,4 @@
-package dev.lo1am0n.lolaclient.module.impl.visual.modmanager;
+package dev.lo1am0n.lolaclient.module.impl.normalmodules.visual.modmanager;
 
 import java.awt.Color;
 import java.io.IOException;
@@ -50,9 +50,16 @@ public class ModManagerGui extends GuiScreen {
         Color purple = new Color(152, 96, 255);
         int count = 0;
         for (LolaModule m : Minecraft.getMinecraft().getLolaClient().getModulesByCategory(currentCategory)) {
-            mc.fontRendererObj.drawString(m.getName(), x + 3, (int) (y + 25 + (count * mc.fontRendererObj.FONT_HEIGHT * 1.5)),
-                    m.isEnabled() ? purple.getRGB() : -1);
-            count++;
+            if (m.isAdvantageModule() && !Minecraft.getMinecraft().getLolaClient().allowAdvantageModules) {
+                mc.fontRendererObj.drawString("???", x + 3, (int) (y + 25 + (count * mc.fontRendererObj.FONT_HEIGHT * 1.5)),
+                        m.isEnabled() ? purple.getRGB() : -1);
+                count++;
+            }
+            else {
+                mc.fontRendererObj.drawString(m.getName(), x + 3, (int) (y + 25 + (count * mc.fontRendererObj.FONT_HEIGHT * 1.5)),
+                        m.isEnabled() ? purple.getRGB() : -1);
+                count++;
+            }
         }
         count = 0;
         for (LolaModuleType c : LolaModuleType.values()) {
@@ -184,15 +191,17 @@ public class ModManagerGui extends GuiScreen {
             boolean hovered = mouseX > x + 3 && mouseY > y + 25 + (count * mc.fontRendererObj.FONT_HEIGHT * 1.5)
                     && mouseX < x + 3 + mc.fontRendererObj.getStringWidth(m.getName()) && mouseY < y + 25
                     + (count * mc.fontRendererObj.FONT_HEIGHT * 1.5) + mc.fontRendererObj.FONT_HEIGHT;
-            if (hovered && mouseButton == 0) {
-                m.setEnabled(!m.isEnabled());
-                currentModule = m;
-            }
-            if (hovered && mouseButton == 1) {
-                currentModule = m;
+
+            if (!(m.isAdvantageModule() && !Minecraft.getMinecraft().getLolaClient().allowAdvantageModules)) {
+                if (hovered && mouseButton == 0) {
+                    m.setEnabled(!m.isEnabled());
+                    currentModule = m;
+                }
+                if (hovered && mouseButton == 1) {
+                    currentModule = m;
+                }
             }
             count++;
-
         }
         count = 0;
         for (LolaModuleType c : LolaModuleType.values()) {

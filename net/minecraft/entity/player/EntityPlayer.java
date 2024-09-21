@@ -11,6 +11,7 @@ import net.minecraft.block.BlockBed;
 import net.minecraft.block.BlockDirectional;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.command.server.CommandBlockLogic;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -731,6 +732,11 @@ public abstract class EntityPlayer extends EntityLivingBase
         {
             this.motionX = (double)(-MathHelper.cos((this.attackedAtYaw + this.rotationYaw) * (float)Math.PI / 180.0F) * 0.1F);
             this.motionZ = (double)(-MathHelper.sin((this.attackedAtYaw + this.rotationYaw) * (float)Math.PI / 180.0F) * 0.1F);
+
+            if (this instanceof EntityPlayerSP) {
+                this.motionX = (double)(-MathHelper.cos((this.attackedAtYaw + this.rotationYawMove) * (float)Math.PI / 180.0F) * 0.1F);
+                this.motionZ = (double)(-MathHelper.sin((this.attackedAtYaw + this.rotationYawMove) * (float)Math.PI / 180.0F) * 0.1F);
+            }
         }
         else
         {
@@ -1354,9 +1360,14 @@ public abstract class EntityPlayer extends EntityLivingBase
 
                     if (flag2)
                     {
-                        if (i > 0)
-                        {
-                            targetEntity.addVelocity((double)(-MathHelper.sin(this.rotationYaw * (float)Math.PI / 180.0F) * (float)i * 0.5F), 0.1D, (double)(MathHelper.cos(this.rotationYaw * (float)Math.PI / 180.0F) * (float)i * 0.5F));
+                        if (i > 0) {
+
+                            if (this instanceof EntityPlayerSP) {
+                                targetEntity.addVelocity((double)(-MathHelper.sin(this.rotationYawMove * (float)Math.PI / 180.0F) * (float)i * 0.5F), 0.1D, (double)(MathHelper.cos(this.rotationYawMove * (float)Math.PI / 180.0F) * (float)i * 0.5F));
+                            }
+                            else {
+                                targetEntity.addVelocity((double)(-MathHelper.sin(this.rotationYaw * (float)Math.PI / 180.0F) * (float)i * 0.5F), 0.1D, (double)(MathHelper.cos(this.rotationYaw * (float)Math.PI / 180.0F) * (float)i * 0.5F));
+                            }
                             this.motionX *= 0.6D;
                             this.motionZ *= 0.6D;
                             this.setSprinting(false);

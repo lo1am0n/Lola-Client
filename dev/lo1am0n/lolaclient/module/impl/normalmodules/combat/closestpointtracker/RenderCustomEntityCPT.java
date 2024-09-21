@@ -1,18 +1,10 @@
-package dev.lo1am0n.lolaclient.module.impl.combat.closestpointtracker;
+package dev.lo1am0n.lolaclient.module.impl.normalmodules.combat.closestpointtracker;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBat;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.entity.passive.EntityBat;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
-import org.lwjgl.opengl.GL11;
 
 public class RenderCustomEntityCPT extends RenderLiving<CustomEntityCPT>
 {

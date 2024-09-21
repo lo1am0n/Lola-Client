@@ -1494,6 +1494,14 @@ public class EntityRenderer implements IResourceManagerReloadListener
             this.renderWorldDirections(partialTicks);
         }
 
+        Minecraft.getMinecraft().thePlayer.rotationYawMove = Minecraft.getMinecraft().thePlayer.rotationYaw;
+
+        Minecraft.getMinecraft().thePlayer.prevRotationYawHead = Minecraft.getMinecraft().thePlayer.rotationYawHead;
+        Minecraft.getMinecraft().thePlayer.rotationYawHead = Minecraft.getMinecraft().thePlayer.rotationYaw;
+
+        Minecraft.getMinecraft().thePlayer.prevRotationPitchHead = Minecraft.getMinecraft().thePlayer.rotationPitchHead;
+        Minecraft.getMinecraft().thePlayer.rotationPitchHead = Minecraft.getMinecraft().thePlayer.rotationPitch;
+
         for (LolaModule module : Minecraft.getMinecraft().getLolaClient().getLolaModules()) {
             if (module.isEnabled()) {
                 module.handleEvent(new Render3DEvent(partialTicks));

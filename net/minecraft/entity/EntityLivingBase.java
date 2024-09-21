@@ -12,6 +12,7 @@ import java.util.UUID;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.BaseAttributeMap;
@@ -1565,6 +1566,10 @@ public abstract class EntityLivingBase extends Entity
         if (this.isSprinting())
         {
             float f = this.rotationYaw * 0.017453292F;
+
+            if (this instanceof EntityPlayerSP) {
+                f = this.rotationYawMove * 0.017453292F;
+            }
             this.motionX -= (double)(MathHelper.sin(f) * 0.2F);
             this.motionZ += (double)(MathHelper.cos(f) * 0.2F);
         }

@@ -21,6 +21,7 @@ public class LolaModule {
     private int keybind = Keyboard.KEY_NONE;
     private LolaModuleType category = LolaModuleType.Misc;
     private CopyOnWriteArrayList<ModuleSetting> moduleSettings = new CopyOnWriteArrayList<>();
+    private boolean isAdvantageModule = false;
 
     public LolaModule(String name, String description, LolaModuleType category) {
         this.name = name;
@@ -97,6 +98,14 @@ public class LolaModule {
             }
         }
         return null;
+    }
+
+    public boolean isAdvantageModule() {
+        return isAdvantageModule;
+    }
+
+    public void setAdvantageModule(boolean advantageModule) {
+        isAdvantageModule = advantageModule;
     }
 
     public void handleEvent(LolaEvent e) {
