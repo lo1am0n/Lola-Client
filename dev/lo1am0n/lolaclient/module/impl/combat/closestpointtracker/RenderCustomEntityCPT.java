@@ -1,5 +1,6 @@
 package dev.lo1am0n.lolaclient.module.impl.combat.closestpointtracker;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBat;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
@@ -29,58 +30,13 @@ public class RenderCustomEntityCPT extends RenderLiving<CustomEntityCPT>
 
     @Override
     public void doRender(CustomEntityCPT entity, double x, double y, double z, float entityYaw, float partialTicks) {
-        AxisAlignedBB boundingBox = entity.getEntityBoundingBox();
+        double d0 = entity.lastTickPosX + (entity.posX - entity.lastTickPosX) * (double)partialTicks;
+        double d1 = entity.lastTickPosY + (entity.posY - entity.lastTickPosY) * (double)partialTicks;
+        double d2 = entity.lastTickPosZ + (entity.posZ - entity.lastTickPosZ) * (double)partialTicks;
 
-        double minX = boundingBox.minX - entity.posX + x;
-        double minY = boundingBox.minY - entity.posY + y;
-        double minZ = boundingBox.minZ - entity.posZ + z;
-        double maxX = boundingBox.maxX - entity.posX + x;
-        double maxY = boundingBox.maxY - entity.posY + y;
-        double maxZ = boundingBox.maxZ - entity.posZ + z;
+        // this.doRenderEntity(entity, d0 - this.renderPosX, d1 - this.renderPosY, d2 - this.renderPosZ, f, partialTicks, p_147936_3_);
 
-        GL11.glEnable(GL11.GL_BLEND);
-        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-
-        GL11.glColor4f(152.0F / 255.0F, 96F / 255.0F, 255F / 255.0F, 0.5F);
-
-        // Disable lighting and texture for a solid-colored box
-        GL11.glDisable(GL11.GL_LIGHTING);
-        GL11.glDisable(GL11.GL_TEXTURE_2D);
-
-        // Draw the bounding box
-        Tessellator tessellator = Tessellator.getInstance();
-        WorldRenderer worldRenderer = tessellator.getWorldRenderer();
-        worldRenderer.begin(GL11.GL_LINE_LOOP, DefaultVertexFormats.POSITION);
-
-        // Draw each corner of the bounding box
-        worldRenderer.pos(minX, minY, minZ).endVertex();
-        worldRenderer.pos(maxX, minY, minZ).endVertex();
-        worldRenderer.pos(maxX, minY, maxZ).endVertex();
-        worldRenderer.pos(minX, minY, maxZ).endVertex();
-        worldRenderer.pos(minX, minY, minZ).endVertex();
-
-        worldRenderer.pos(minX, maxY, minZ).endVertex();
-        worldRenderer.pos(maxX, maxY, minZ).endVertex();
-        worldRenderer.pos(maxX, maxY, maxZ).endVertex();
-        worldRenderer.pos(minX, maxY, maxZ).endVertex();
-        worldRenderer.pos(minX, maxY, minZ).endVertex();
-
-        worldRenderer.pos(minX, minY, minZ).endVertex();
-        worldRenderer.pos(minX, maxY, minZ).endVertex();
-        worldRenderer.pos(maxX, minY, minZ).endVertex();
-        worldRenderer.pos(maxX, maxY, minZ).endVertex();
-        worldRenderer.pos(maxX, minY, maxZ).endVertex();
-        worldRenderer.pos(maxX, maxY, maxZ).endVertex();
-        worldRenderer.pos(minX, minY, maxZ).endVertex();
-        worldRenderer.pos(minX, maxY, maxZ).endVertex();
-
-        tessellator.draw();
-
-        // Reset color and re-enable lighting and texture
-        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        GL11.glEnable(GL11.GL_LIGHTING);
-        GL11.glEnable(GL11.GL_TEXTURE_2D);
-        GL11.glDisable(GL11.GL_BLEND);
+        RenderManager.renderDebugBoundingBox2(entity, d0 - RenderManager.posX2, d1 - RenderManager.posY2, d2 - RenderManager.posZ2, Minecraft.getMinecraft().thePlayer.rotationYaw, 1.0F);
         super.doRender(entity, x, y, z, entityYaw, partialTicks);
     }
 }

@@ -2,6 +2,9 @@ package net.minecraft.client.renderer.entity;
 
 import com.google.common.collect.Maps;
 import java.util.Map;
+
+import dev.lo1am0n.lolaclient.module.impl.combat.closestpointtracker.CustomEntityCPT;
+import dev.lo1am0n.lolaclient.module.impl.combat.closestpointtracker.RenderCustomEntityCPT;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBed;
 import net.minecraft.block.state.IBlockState;
@@ -171,6 +174,7 @@ public class RenderManager
         this.entityRenderMap.put(EntityVillager.class, new RenderVillager(this));
         this.entityRenderMap.put(EntityIronGolem.class, new RenderIronGolem(this));
         this.entityRenderMap.put(EntityBat.class, new RenderBat(this));
+        this.entityRenderMap.put(CustomEntityCPT.class, new RenderCustomEntityCPT(this)); // frrfrfr
         this.entityRenderMap.put(EntityGuardian.class, new RenderGuardian(this));
         this.entityRenderMap.put(EntityDragon.class, new RenderDragon(this));
         this.entityRenderMap.put(EntityEnderCrystal.class, new RenderEnderCrystal(this));
@@ -471,7 +475,7 @@ public class RenderManager
         GlStateManager.depthMask(true);
     }
 
-    public static void renderDebugBoundingBox2(Entity entityIn, AxisAlignedBB customBB, double p_85094_2_, double p_85094_4_, double p_85094_6_, float p_85094_8_, float p_85094_9_)
+    public static void renderDebugBoundingBox2(Entity entityIn, double p_85094_2_, double p_85094_4_, double p_85094_6_, float p_85094_8_, float p_85094_9_)
     {
         GlStateManager.depthMask(false);
         GlStateManager.disableTexture2D();
@@ -481,7 +485,7 @@ public class RenderManager
         float f = entityIn.width / 2.0F;
         AxisAlignedBB axisalignedbb = entityIn.getEntityBoundingBox();
         AxisAlignedBB axisalignedbb1 = new AxisAlignedBB(axisalignedbb.minX - entityIn.posX + p_85094_2_, axisalignedbb.minY - entityIn.posY + p_85094_4_, axisalignedbb.minZ - entityIn.posZ + p_85094_6_, axisalignedbb.maxX - entityIn.posX + p_85094_2_, axisalignedbb.maxY - entityIn.posY + p_85094_4_, axisalignedbb.maxZ - entityIn.posZ + p_85094_6_);
-        RenderGlobal.func_181563_a(axisalignedbb1, 255, 255, 255, 255);
+        RenderGlobal.func_181563_a(axisalignedbb1, 255, 0, 0, 255);
 
         if (entityIn instanceof EntityLivingBase)
         {

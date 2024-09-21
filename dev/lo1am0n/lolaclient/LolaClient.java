@@ -24,6 +24,8 @@ public class LolaClient {
 
     private CopyOnWriteArrayList<LolaModule> lolaModules = new CopyOnWriteArrayList<>();
 
+    private CopyOnWriteArrayList<String> changelogs = new CopyOnWriteArrayList<>();
+
     public LolaClient() {
         // Servers that don't allow 1.7 hit reg
         preventOnePointSevenHitRegUsage.add("hypixel.net");
@@ -33,6 +35,10 @@ public class LolaClient {
 
         // Chat Tags (for contributors and other very important people)
         playerTags.put("Lo1am0n", LolaChatTag.OWNER);
+
+        // Change Logs
+        changelogs.add("[+] Added a lot of features");
+        changelogs.add("[~] Fixed ClosestPointTracker false flagging anti-cheats");
 
         // Combat
         lolaModules.add(new ClosestPointTracker());
@@ -69,5 +75,9 @@ public class LolaClient {
         }
 
         return theModules;
+    }
+
+    public CopyOnWriteArrayList<String> getChangelog() {
+        return changelogs;
     }
 }

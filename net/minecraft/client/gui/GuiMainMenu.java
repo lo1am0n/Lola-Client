@@ -538,7 +538,18 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         GlStateManager.scale(f, f, f);
         this.drawCenteredString(this.fontRendererObj, this.splashText, 0, -8, -256);
         GlStateManager.popMatrix();
-        String s = "Minecraft 1.8.8";
+
+
+        int funnyY = 3;
+
+        for (String changelogElement : Minecraft.getMinecraft().getLolaClient().getChangelog()) {
+            this.drawString(this.fontRendererObj, changelogElement, 2, funnyY, -1);
+            funnyY += (3 + mc.fontRendererObj.FONT_HEIGHT);
+        }
+
+
+
+        String s = "Lola Client - Minecraft 1.8.9";
 
         if (this.mc.isDemo())
         {
