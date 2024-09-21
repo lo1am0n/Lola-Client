@@ -41,7 +41,7 @@ public class RenderCustomEntityCPT extends RenderLiving<CustomEntityCPT>
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 
-        GL11.glColor4f(1.0F, 1.0F, 1.0F, 0.5F);
+        GL11.glColor4f(152.0F / 255.0F, 96F / 255.0F, 255F / 255.0F, 0.5F);
 
         // Disable lighting and texture for a solid-colored box
         GL11.glDisable(GL11.GL_LIGHTING);

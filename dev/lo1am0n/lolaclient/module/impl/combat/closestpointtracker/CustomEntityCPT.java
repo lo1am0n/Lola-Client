@@ -21,7 +21,7 @@ public class CustomEntityCPT extends EntityAmbientCreature
     public CustomEntityCPT(World worldIn)
     {
         super(worldIn);
-        this.setSize(0.1F, 0.1F);
+        this.setSize(0.25F, 0.25F);
         this.setIsBatHanging(true);
     }
 
