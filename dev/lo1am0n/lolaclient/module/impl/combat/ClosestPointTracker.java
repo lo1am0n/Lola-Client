@@ -43,8 +43,6 @@ public class ClosestPointTracker extends LolaModule {
         }
     }
 
-    public Vec3 batPos = new Vec3(0, 0, 0);
-
     @Override
     public void onUpdate(PreMotionEvent e) {
     }
@@ -66,6 +64,8 @@ public class ClosestPointTracker extends LolaModule {
         }
 
         if (enemy == null) {
+            iHateBoundingBoxes.setPosition(0, 0, 0);
+            iHateBoundingBoxes.onUpdate();
             return; // No enemy found
         }
 
@@ -79,8 +79,6 @@ public class ClosestPointTracker extends LolaModule {
         if (closestPoint != null) {
             iHateBoundingBoxes.setPosition(closestPoint.xCoord, closestPoint.yCoord, closestPoint.zCoord);
             iHateBoundingBoxes.onUpdate();
-
-            System.out.println("Closest Point: " + closestPoint + " | Bat Position: " + iHateBoundingBoxes.getPosition());
         }
     }
 
@@ -97,26 +95,31 @@ public class ClosestPointTracker extends LolaModule {
         if (e.getPacket() instanceof C02PacketUseEntity) {
             C02PacketUseEntity packet = (C02PacketUseEntity) e.getPacket();
 
-            if (packet.getAction() == C02PacketUseEntity.Action.ATTACK && packet.getEntityFromWorld(Minecraft.getMinecraft().theWorld).getEntityId() == iHateBoundingBoxes.getEntityId()) {
-                EntityLivingBase enemy = null;
-                double enemyDist = Double.MAX_VALUE;
+            if (packet.getAction() == C02PacketUseEntity.Action.ATTACK) {
+                // Apparently the bat doesn't exist
+                // Thanks Mojang!
+                if (packet.getEntityFromWorld(Minecraft.getMinecraft().theWorld) == null) {
+                    EntityLivingBase enemy = null;
+                    double enemyDist = Double.MAX_VALUE;
 
-                for (Entity entity : Minecraft.getMinecraft().theWorld.loadedEntityList) {
-                    if (entity instanceof EntityPlayer && entity != Minecraft.getMinecraft().thePlayer) {
-                        double distToPlayer = entity.getDistanceToEntity(Minecraft.getMinecraft().thePlayer);
-                        if (distToPlayer < enemyDist && distToPlayer >= 1.25 && distToPlayer <= 4.5) {
-                            enemy = (EntityLivingBase) entity;
-                            enemyDist = distToPlayer;
+                    for (Entity entity : Minecraft.getMinecraft().theWorld.loadedEntityList) {
+                        if (entity instanceof EntityPlayer && entity != Minecraft.getMinecraft().thePlayer) {
+                            double distToPlayer = entity.getDistanceToEntity(Minecraft.getMinecraft().thePlayer);
+                            if (distToPlayer < enemyDist && distToPlayer >= 1.25 && distToPlayer <= 4.5) {
+                                enemy = (EntityLivingBase) entity;
+                                enemyDist = distToPlayer;
+                            }
                         }
                     }
-                }
 
-                if (enemy == null) {
-                    // whoops!
-                    return;
-                }
+                    if (enemy == null) {
+                        // whoops!
+                        return;
+                    }
 
-                e.setPacket(new C02PacketUseEntity(enemy, C02PacketUseEntity.Action.ATTACK));
+                    e.setPacket(new C02PacketUseEntity(enemy, C02PacketUseEntity.Action.ATTACK));
+                    System.out.println("corrected attack");
+                }
             }
         }
     }

@@ -2,6 +2,10 @@ package net.minecraft.network;
 
 import com.google.common.collect.Queues;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
+import dev.lo1am0n.lolaclient.event.impl.PacketReceiveEvent;
+import dev.lo1am0n.lolaclient.event.impl.PacketSendEvent;
+import dev.lo1am0n.lolaclient.event.impl.PreMotionEvent;
+import dev.lo1am0n.lolaclient.module.LolaModule;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelException;
@@ -32,6 +36,8 @@ import java.net.SocketAddress;
 import java.util.Queue;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import javax.crypto.SecretKey;
+
+import net.minecraft.client.Minecraft;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.CryptManager;
@@ -148,6 +154,18 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet>
 
     protected void channelRead0(ChannelHandlerContext p_channelRead0_1_, Packet p_channelRead0_2_) throws Exception
     {
+        PacketReceiveEvent event = new PacketReceiveEvent(p_channelRead0_2_);
+
+        for (LolaModule module : Minecraft.getMinecraft().getLolaClient().getLolaModules()) {
+            if (module.isEnabled()) {
+                module.handleEvent(event);
+            }
+        }
+
+        p_channelRead0_2_ = event.getPacket();
+
+        if (event.isCancelled()) return;
+
         if (this.channel.isOpen())
         {
             try
@@ -220,8 +238,20 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet>
      * Will commit the packet to the channel. If the current thread 'owns' the channel it will write and flush the
      * packet, otherwise it will add a task for the channel eventloop thread to do that.
      */
-    private void dispatchPacket(final Packet inPacket, final GenericFutureListener <? extends Future <? super Void >> [] futureListeners)
+    private void dispatchPacket(Packet inPacket, final GenericFutureListener <? extends Future <? super Void >> [] futureListeners)
     {
+        PacketSendEvent event = new PacketSendEvent(inPacket);
+
+        for (LolaModule module : Minecraft.getMinecraft().getLolaClient().getLolaModules()) {
+            if (module.isEnabled()) {
+                module.handleEvent(event);
+            }
+        }
+
+        inPacket = event.getPacket();
+
+        if (event.isCancelled()) return;
+
         final EnumConnectionState enumconnectionstate = EnumConnectionState.getFromPacket(inPacket);
         final EnumConnectionState enumconnectionstate1 = (EnumConnectionState)this.channel.attr(attrKeyConnectionState).get();
 
@@ -249,6 +279,7 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet>
         }
         else
         {
+            Packet finalInPacket = inPacket;
             this.channel.eventLoop().execute(new Runnable()
             {
                 public void run()
@@ -258,7 +289,7 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet>
                         NetworkManager.this.setConnectionState(enumconnectionstate);
                     }
 
-                    ChannelFuture channelfuture1 = NetworkManager.this.channel.writeAndFlush(inPacket);
+                    ChannelFuture channelfuture1 = NetworkManager.this.channel.writeAndFlush(finalInPacket);
 
                     if (futureListeners != null)
                     {
