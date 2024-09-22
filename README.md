@@ -18,3 +18,9 @@ Since a lot of PVP clients are closed source, we decided it would be nice to mak
 
 ## Notices
 This project is WIP, so expect to see bugs upon release. If you find a bug, please report it!
+
+It you are a servwr owner, please note the following:
+
+- This client is open-source, so it can be easily modified
+
+- You may create an issue to request removal of certain features (on your server). These include HitRegFix and FreeLook.
