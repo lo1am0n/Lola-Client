@@ -1,4 +1,4 @@
-package dev.lo1am0n.lolaclient.module.impl.normalmodules.combat;
+package dev.lo1am0n.lolaclient.module.impl.combat;
 
 import dev.lo1am0n.lolaclient.event.impl.HitRegistrationEvent;
 import dev.lo1am0n.lolaclient.module.LolaModule;

@@ -1,9 +1,8 @@
-package dev.lo1am0n.lolaclient.module.impl.normalmodules.misc;
+package dev.lo1am0n.lolaclient.module.impl.misc;
 
 import dev.lo1am0n.lolaclient.module.LolaModule;
 import dev.lo1am0n.lolaclient.module.LolaModuleType;
 import net.minecraft.client.Minecraft;
-import net.minecraft.util.ChatComponentText;
 
 public class LolaAdvantageModules extends LolaModule {
     public LolaAdvantageModules() {
@@ -12,7 +11,9 @@ public class LolaAdvantageModules extends LolaModule {
 
     @Override
     public void onEnable() {
-        if (Minecraft.getMinecraft().thePlayer.getName() == "Lo1am0n" || Minecraft.getMinecraft().thePlayer.getName() == "LolaClientDebug") {
+        Minecraft.getMinecraft().getLolaClient().allowAdvantageModules = true;
+
+        if (Minecraft.getMinecraft().thePlayer.getName() == "Lo1am0n") {
             Minecraft.getMinecraft().getLolaClient().allowAdvantageModules = true;
             LolaDebug.sendDebugChatMessage("Successfully enabled bannable modules!");
         }

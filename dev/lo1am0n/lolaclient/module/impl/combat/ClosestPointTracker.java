@@ -1,9 +1,9 @@
-package dev.lo1am0n.lolaclient.module.impl.normalmodules.combat;
+package dev.lo1am0n.lolaclient.module.impl.combat;
 
 import dev.lo1am0n.lolaclient.event.impl.*;
 import dev.lo1am0n.lolaclient.module.LolaModule;
 import dev.lo1am0n.lolaclient.module.LolaModuleType;
-import dev.lo1am0n.lolaclient.module.impl.normalmodules.combat.closestpointtracker.CustomEntityCPT;
+import dev.lo1am0n.lolaclient.module.impl.combat.closestpointtracker.CustomEntityCPT;
 import dev.lo1am0n.lolaclient.module.setting.impl.DoubleNumberSetting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;

@@ -1,4 +1,4 @@
-package dev.lo1am0n.lolaclient.module.impl.normalmodules.visual;
+package dev.lo1am0n.lolaclient.module.impl.visual;
 
 import dev.lo1am0n.lolaclient.event.impl.PacketSendEvent;
 import dev.lo1am0n.lolaclient.event.impl.Render3DEvent;
@@ -36,6 +36,9 @@ public class FreeLook extends LolaModule {
     public void onDisable() {
         Minecraft.getMinecraft().gameSettings.thirdPersonView = 0;
         Minecraft.getMinecraft().entityRenderer.loadEntityShader(Minecraft.getMinecraft().getRenderViewEntity());
+
+        Minecraft.getMinecraft().thePlayer.rotationYaw = rotationYaw;
+        Minecraft.getMinecraft().thePlayer.rotationPitch = rotationPitch;
     }
 
     @Override

@@ -1,4 +1,4 @@
-package dev.lo1am0n.lolaclient.module.impl.normalmodules.movement;
+package dev.lo1am0n.lolaclient.module.impl.movement;
 
 import dev.lo1am0n.lolaclient.event.impl.PreMotionEvent;
 import dev.lo1am0n.lolaclient.module.LolaModule;

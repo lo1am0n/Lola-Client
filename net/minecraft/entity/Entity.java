@@ -47,6 +47,7 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import org.lwjgl.util.vector.Vector2f;
 
 public abstract class Entity implements ICommandSender
 {
@@ -392,6 +393,15 @@ public abstract class Entity implements ICommandSender
         this.prevRotationYaw += this.rotationYaw - f1;
     }
 
+    public Vector2f getAngles(float yaw, float pitch)
+    {
+        float rotationYaw2 = 0.0f;
+        float rotationPitch2 = 0.0f;
+        rotationYaw2 = (float)((double)this.rotationYaw + (double)yaw * 0.15D);
+        rotationPitch2 = (float)((double)this.rotationPitch - (double)pitch * 0.15D);
+
+        return new Vector2f(rotationYaw2, rotationPitch2);
+    }
     /**
      * Called to update the entity's position/logic.
      */

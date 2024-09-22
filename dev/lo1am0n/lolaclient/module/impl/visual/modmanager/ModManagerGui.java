@@ -1,4 +1,4 @@
-package dev.lo1am0n.lolaclient.module.impl.normalmodules.visual.modmanager;
+package dev.lo1am0n.lolaclient.module.impl.visual.modmanager;
 
 import java.awt.Color;
 import java.io.IOException;

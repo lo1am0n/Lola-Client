@@ -3,9 +3,9 @@ package net.minecraft.client.renderer.entity;
 import com.google.common.collect.Maps;
 import java.util.Map;
 
-import dev.lo1am0n.lolaclient.module.impl.normalmodules.combat.ClosestPointTracker;
-import dev.lo1am0n.lolaclient.module.impl.normalmodules.combat.closestpointtracker.CustomEntityCPT;
-import dev.lo1am0n.lolaclient.module.impl.normalmodules.combat.closestpointtracker.RenderCustomEntityCPT;
+import dev.lo1am0n.lolaclient.module.impl.combat.ClosestPointTracker;
+import dev.lo1am0n.lolaclient.module.impl.combat.closestpointtracker.CustomEntityCPT;
+import dev.lo1am0n.lolaclient.module.impl.combat.closestpointtracker.RenderCustomEntityCPT;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBed;
 import net.minecraft.block.state.IBlockState;

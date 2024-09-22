@@ -1,6 +1,6 @@
-package dev.lo1am0n.lolaclient.module.impl.normalmodules.combat.closestpointtracker;
+package dev.lo1am0n.lolaclient.module.impl.combat.closestpointtracker;
 
-import dev.lo1am0n.lolaclient.module.impl.normalmodules.combat.ClosestPointTracker;
+import dev.lo1am0n.lolaclient.module.impl.combat.ClosestPointTracker;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.SharedMonsterAttributes;

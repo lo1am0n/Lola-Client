@@ -1,8 +1,8 @@
-package dev.lo1am0n.lolaclient.module.impl.normalmodules.visual;
+package dev.lo1am0n.lolaclient.module.impl.visual;
 
 import dev.lo1am0n.lolaclient.module.LolaModule;
 import dev.lo1am0n.lolaclient.module.LolaModuleType;
-import dev.lo1am0n.lolaclient.module.impl.normalmodules.visual.modmanager.ModManagerGui;
+import dev.lo1am0n.lolaclient.module.impl.visual.modmanager.ModManagerGui;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.input.Keyboard;
 

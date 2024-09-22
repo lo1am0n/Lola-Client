@@ -1,4 +1,4 @@
-package dev.lo1am0n.lolaclient.module.impl.normalmodules.combat.closestpointtracker;
+package dev.lo1am0n.lolaclient.module.impl.combat.closestpointtracker;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBat;
